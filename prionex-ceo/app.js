@@ -1,5 +1,6 @@
 const el=id=>document.getElementById(id);
-const number=new Intl.NumberFormat('ru-RU',{maximumFractionDigits:1});
+const copy=BriefLanguage[document.documentElement.lang]??BriefLanguage.ru;
+const number=new Intl.NumberFormat(copy.locale,{maximumFractionDigits:1});
 const n=x=>number.format(x);
 const sign=x=>(x>0?'+':'')+n(x);
 const {accepted,rejected}=Brief.validate(Brief.raw);
@@ -9,35 +10,47 @@ let verified=false;
 for(const row of accepted)el('project').add(new Option(row.name,row.id));
 const current=()=>accepted.filter(r=>el('project').value==='all'||r.id===el('project').value);
 const totals=()=>Brief.calculate(current(),el('scenario').value);
-const query={
- CRM:'Growth: подтвердить −200 лидов по источникам. Product: проверить шаг онбординга, где просела конверсия.',
- FLOW:'Product: подтвердить рост конверсии и исключить изменение определения активации.',
- DATA:'Delivery: сверить журнал задержанных активаций и подтвердить дату следующей выгрузки.',
- all:'Growth: подтвердить отклонение по CRM Core. Reporting: запросить факт Legacy и указать срок предоставления.'
-};
+const query=copy.requests;
+const params=new URLSearchParams(location.search);
+for(const id of ['project','scenario']){
+ const value=params.get(id);
+ if(value&&Array.from(el(id).options).some(option=>option.value===value))el(id).value=value;
+}
+el('language-link').addEventListener('click',event=>{
+ const link=event.currentTarget;
+ const destination=new URL(link.getAttribute('href'),location.href);
+ destination.searchParams.delete('project');
+ destination.searchParams.delete('scenario');
+ if(el('project').value!=='all')destination.searchParams.set('project',el('project').value);
+ if(el('scenario').value!=='base')destination.searchParams.set('scenario',el('scenario').value);
+ destination.hash=location.hash;
+ link.href=destination.href;
+});
 function renderKpi(){
  const rows=current(), s=totals();
- const metrics=[['План на D12',n(s.cutoff)],['Факт на D12',n(s.actual)],['Отклонение',sign(s.gap),s.gap<0?'bad':'good'],['Прогноз / план месяца',n(s.forecast)+' / '+n(s.plan)]];
+ const metrics=[[copy.metrics[0],n(s.cutoff)],[copy.metrics[1],n(s.actual)],[copy.metrics[2],sign(s.gap),s.gap<0?'bad':'good'],[copy.metrics[3],n(s.forecast)+' / '+n(s.plan)]];
  el('metrics').innerHTML=metrics.map(([l,v,c=''])=>'<article><small>'+l+'</small><strong class="'+c+'">'+v+'</strong></article>').join('');
- el('drivers').innerHTML=[['Эффект объёма лидов',s.volume],['Эффект конверсии',s.conversion]].map(([l,v])=>'<article><small>'+l+'</small><strong>'+sign(v)+' активаций</strong></article>').join('');
+ el('drivers').innerHTML=[[copy.drivers[0],s.volume],[copy.drivers[1],s.conversion]].map(([l,v])=>'<article><small>'+l+'</small><strong>'+sign(v)+' '+copy.activations+'</strong></article>').join('');
  el('rows').innerHTML=rows.map(r=>{const m=Brief.calculate([r],el('scenario').value);return '<tr>'+[r.name,n(m.cutoff),n(m.actual),sign(m.gap),n(m.forecast),n(m.plan)].map(v=>'<td>'+v+'</td>').join('')+'</tr>';}).join('');
  const daysLeft=Brief.period.total-Brief.period.elapsed;
  const currentPace=s.actual/Brief.period.elapsed, requiredPace=Math.max(0,s.remaining/daysLeft);
- el('pace').textContent='Чтобы выполнить план: '+n(requiredPace)+' активаций за рабочий день. Текущий темп: '+n(currentPace)+'. Осталось '+daysLeft+' рабочих дней.';
- el('coverage').textContent='Покрытие отчёта: 3 из 4 проектов. План Legacy 250 активаций исключён из сравнения: факт не получен.';
+ el('pace').textContent=copy.pace(n(requiredPace),n(currentPace),daysLeft);
+ el('coverage').textContent=copy.coverage;
  el('request').textContent=query[el('project').value];
- el('quarantine').innerHTML=rejected.map(r=>'<div class="list-row"><b>'+r.id+'</b><span>'+r.reason+'</span></div>').join('');
+ el('quarantine').innerHTML=rejected.map(r=>'<div class="list-row"><b>'+r.id+'</b><span>'+(copy.reasons?.[r.reason]??r.reason)+'</span></div>').join('');
 }
 function renderTasks(){
  const rows=Brief.tasks.filter(t=>el('project').value==='all'||t.project===el('project').value);
  const late=rows.filter(t=>t.due<Brief.period.elapsed&&!closed.has(t.id)).length;
- el('task-status').textContent='Просрочено: '+late+' · открыто: '+rows.filter(t=>!closed.has(t.id)).length;
- el('tasks').innerHTML=rows.length?rows.map(t=>'<div class="list-row"><div><b>'+t.action+'</b><small>'+t.id+' · '+t.owner+' · D'+t.due+(closed.has(t.id)?' · выполнено':t.due<Brief.period.elapsed?' · просрочено':'')+'</small></div><button class="btn neutral" data-task="'+t.id+'">'+(closed.has(t.id)?'Переоткрыть':'Выполнено')+'</button></div>').join(''):'<p>По выбранному проекту поручений нет.</p>';
+ el('task-status').textContent=copy.taskCount(late,rows.filter(t=>!closed.has(t.id)).length);
+ el('tasks').innerHTML=rows.length?rows.map(t=>'<div class="list-row"><div><b>'+(copy.actions?.[t.id]??t.action)+'</b><small>'+t.id+' · '+t.owner+' · D'+t.due+(closed.has(t.id)?' · '+copy.done:t.due<Brief.period.elapsed?' · '+copy.overdue:'')+'</small></div><button class="btn neutral" data-task="'+t.id+'">'+(closed.has(t.id)?copy.reopen:copy.mark)+'</button></div>').join(''):'<p>'+copy.empty+'</p>';
 }
 function renderDraft(){
  el('verify').disabled=!draft;
  el('export-brief').disabled=!verified;
- el('draft').textContent=draft?'Источники: '+draft.ids.join(', ')+' · '+Brief.scenarios[el('scenario').value].label+'\nФакт: '+n(draft.actual)+' при плане D12 '+n(draft.cutoff)+' ('+sign(draft.gap)+'). Прогноз: '+n(draft.forecast)+' из '+n(draft.plan)+'.\nСледующий шаг: '+query[el('project').value]:'Выбери проект и собери сводку.';
+ el('draft').textContent=draft?copy.brief(
+  draft.ids.join(', '),copy.scenario?.[el('scenario').value]??Brief.scenarios[el('scenario').value].label,n(draft.actual),n(draft.cutoff),sign(draft.gap),n(draft.forecast),n(draft.plan),query[el('project').value]
+ ):copy.noDraft;
  if(!verified)el('validation').textContent='';
 }
 function createDraft(fault){
@@ -53,11 +66,13 @@ el('verify').addEventListener('click',()=>{
  const sourcesMatch=draft.ids.join()===current().map(r=>r.id).join();
  verified=!fails.length&&sourcesMatch;
  el('export-brief').disabled=!verified;
- el('validation').textContent=!verified?'Черновик заблокирован. '+(fails.includes('forecast')?'Прогноз в черновике '+n(draft.forecast)+', по модели '+n(t.forecast)+'.':'Суммы или источники расходятся.'):'Проверено: пять числовых полей и набор ID совпадают с расчётом.';
+ el('validation').textContent=verified?copy.checked:copy.blocked+' '+(
+  fails.includes('forecast')?copy.error(n(draft.forecast),n(t.forecast)):copy.mismatch
+ );
 });
 el('export-brief').addEventListener('click',()=>{
  if(!verified)return;
- const text='Сводка для CEO · демонстрация\n'+el('draft').textContent+'\n'+el('pace').textContent+'\n'+el('coverage').textContent+'\n'+el('task-status').textContent;
+ const text=copy.exportTitle+'\n'+el('draft').textContent+'\n'+el('pace').textContent+'\n'+el('coverage').textContent+'\n'+el('task-status').textContent;
  const href=URL.createObjectURL(new Blob([text],{type:'text/plain;charset=utf-8'}));
  const a=document.createElement('a');a.href=href;a.download='prionex-ceo-brief.txt';a.click();setTimeout(()=>URL.revokeObjectURL(href),1000);
 });

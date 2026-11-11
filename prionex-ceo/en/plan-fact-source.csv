@@ -1,0 +1,6 @@
+﻿"id";"name";"owner";"plan";"expectedLeads";"expectedRate";"leads";"actual";"received"
+"CRM";"CRM Core";"Maria · Growth";"1000";"1200";"0.5";"1000";"450";"true"
+"FLOW";"Workflow";"Denis · Product";"800";"1200";"0.4";"1210";"502";"true"
+"DATA";"Data Hub";"Alina · Delivery";"600";"800";"0.45";"780";"320";"true"
+"CRM";"CRM Core";"Maria · Growth";"1000";"1200";"0.5";"1000";"450";"true"
+"LEGACY";"Legacy";"Reporting";"250";"300";"0.5";"";"";"false"

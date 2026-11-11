@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Запись без потерь — Екатерина Дружинская</title>
+<meta name="description" content="Интерактивный кейс Екатерины Дружинской для команды СберЗдоровья: бизнес-процессы, требования, автоматизация и аналитика.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="styles.css">
+<script src="model.js" defer></script>
+<script src="app.js" defer></script>
+</head>
+<body>
+<header class="top"><div class="wrap top-inner">
+<a class="identity" href="#top"><span class="monogram">ЕД</span><span>Екатерина<br>Дружинская</span></a>
+<nav aria-label="Разделы"><a href="#case">Кейс</a><a href="#analytics">Дашборд</a><a href="#experience">Опыт</a></nav>
+<a class="button outline compact" href="https://druzhinskaia.github.io/">Резюме <span class="diagonal" aria-hidden="true">→</span></a>
+</div></header>
+<main id="top">
+<section class="hero">
+<div class="wrap hero-grid">
+<div class="hero-copy"><p class="eyebrow"><i></i> Кейс для команды СберЗдоровья</p>
+<h1>Запись<br><em>без потерь.</em></h1>
+<p class="hero-description">Как вовремя замечать сбои при записи в клинику, предлагать пациенту другой слот и измерять, сколько визитов удалось сохранить.</p>
+<div class="hero-actions"><a class="button primary" href="#case">Разобрать кейс <span aria-hidden="true">↓</span></a><a class="button ghost" href="#analytics">Открыть дашборд <span class="diagonal" aria-hidden="true">→</span></a></div>
+</div>
+<div class="hero-visual" aria-label="Предпросмотр прототипа, 38 демонстрационных записей из 50 завершились визитом">
+<div class="visual-grid"></div><div class="visual-window">
+<div class="window-head"><div><span class="window-icon">✦</span> Контроль записи</div><span class="live"><i></i> Демо</span></div>
+<div class="window-body"><p>Доля состоявшихся визитов</p><div class="metric-preview">76<span>%</span> <small>+14 п. п.</small></div><div class="graph" aria-hidden="true"><svg viewBox="0 0 390 114" preserveAspectRatio="none"><defs><linearGradient id="fade" x2="0" y2="1"><stop stop-color="#68ebbb" stop-opacity=".35"/><stop offset="1" stop-color="#68ebbb" stop-opacity="0"/></linearGradient></defs><path d="M5 90 C125 90 252 17 385 17 V114 H0Z" fill="url(#fade)"/><path d="M5 90 C125 90 252 17 385 17" fill="none" stroke="#8ff5c6" stroke-width="3" vector-effect="non-scaling-stroke"/><circle cx="5" cy="90" r="4" fill="#bbffd9"/><circle cx="385" cy="17" r="5" fill="#bbffd9"/></svg></div><div class="chart-caption"><span>До пилота · 62%</span><span>После пилота · 76%</span></div></div>
+<div class="window-foot"><span>Новая запись</span><b aria-hidden="true">→</b><span>Подтверждение</span><b aria-hidden="true">→</b><span>Визит</span></div></div>
+<div class="floating"><span aria-hidden="true">→</span><div><b>Клиника отменила слот</b><br><small>Оператору назначена задача</small></div></div>
+</div>
+</div>
+</section>
+<div class="wrap quick" aria-label="Содержание кейса"><a href="#case" data-open="process"><b>01</b><span>Процесс<small>AS-IS и TO-BE</small></span><span class="diagonal" aria-hidden="true">→</span></a><a href="#case" data-open="requirements"><b>02</b><span>Требования<small>Интервью и ТЗ</small></span><span class="diagonal" aria-hidden="true">→</span></a><a href="#case" data-open="automation"><b>03</b><span>Автоматизация<small>Симулятор CRM</small></span><span class="diagonal" aria-hidden="true">→</span></a><a href="#analytics"><b>04</b><span>Эффект<small>Метрики и экономика</small></span><span class="diagonal" aria-hidden="true">→</span></a></div>
+<section id="case" class="section wrap">
+<div class="section-title"><div><p class="eyebrow"><i></i> От гипотезы к пилоту</p><h2>Что происходит<br>после записи?</h2></div><p>Допустим, клиника отменила слот, а пациент ещё рассчитывает на приём. Я проверяю, где теряется обращение, и проектирую единый маршрут до нового слота или закрытия задачи.</p></div>
+<div class="notice">Проектный кейс. Процессы и данные смоделированы для демонстрации подхода.</div>
+<div class="case-shell"><div class="tabs" role="tablist" aria-label="Материалы кейса">
+<button role="tab" id="tab-process" aria-selected="true" aria-controls="process">BPMN</button><button role="tab" id="tab-requirements" aria-selected="false" aria-controls="requirements" tabindex="-1">Интервью и ТЗ</button><button role="tab" id="tab-automation" aria-selected="false" aria-controls="automation" tabindex="-1">CRM и no-code</button><button role="tab" id="tab-data" aria-selected="false" aria-controls="data" tabindex="-1">Данные и SQL</button></div>
+<div class="panel" role="tabpanel" id="process" aria-labelledby="tab-process">
+<div class="panel-heading"><div><h3>Отмена слота клиникой</h3><p>Две модели процесса с дорожками, событиями и шлюзами.</p></div><div class="segments" aria-label="Версия процесса"><button data-model="asis" aria-pressed="false">AS-IS</button><button data-model="tobe" aria-pressed="true">TO-BE</button></div></div>
+<div class="diagram" id="diagram" tabindex="0" aria-label="Диаграмма BPMN с горизонтальной прокруткой"></div>
+<div class="panel-bottom"><p id="process-note"></p><a id="bpmn-download" class="text-link" href="tobe.bpmn" download>Скачать BPMN ↓</a></div>
+</div>
+<div class="panel" role="tabpanel" id="requirements" aria-labelledby="tab-requirements" hidden>
+<div class="panel-heading"><div><h3>От разговора к критериям приёмки</h3><p>Вопросы для интервью и требования, которые можно проверить.</p></div></div>
+<div class="two"><article class="subcard"><h4>Что выясню на интервью</h4><details open><summary>Руководитель контакт-центра</summary><p>Как оператор сейчас узнаёт об отмене? Где фиксируется время реакции? Покажите три последних случая и расскажите, как распределяете очередь в пик.</p></details><details><summary>Координатор клиники</summary><p>Кто подтверждает, что новый слот свободен? Что происходит, если время уже заняли? Какие статусы и причины отмены доступны в расписании?</p></details><details><summary>Владелец продукта и ИБ</summary><p>Какой канал связи допустим? Какие поля нужны операторам, кому доступна история и сколько её хранить? Как фиксируется выбор пациента?</p></details></article>
+<article class="subcard"><h4>Фрагмент технического задания</h4><dl><dt>BR-01 · Очередь исключений</dt><dd>При отмене активной записи CRM создаёт задачу с ID записи, временем события, сроком реакции 30 минут и ответственной очередью.</dd><dt>BR-02 · Идемпотентность</dt><dd>Повторный event_id возвращает результат первой обработки. Ограничение уникальности на event_id предотвращает дубликаты при параллельных запросах.</dd><dt>BR-03 · Согласие и слот</dt><dd>Перед подтверждением оператор фиксирует выбор пациента. При конфликте слота CRM сохраняет исход задачи и возвращает оператора к поиску.</dd></dl></article></div>
+<div class="subcard lower"><h4>Приёмка</h4><p><b>Отмена активной записи:</b> появилась одна задача с правильным сроком. <b>Повтор события:</b> количество задач не изменилось. <b>Слот занят:</b> новая запись не создана, задача остаётся открытой. <b>Срок истёк:</b> задача эскалируется дежурному, исход виден в журнале.</p></div>
+</div>
+<div class="panel" role="tabpanel" id="automation" aria-labelledby="tab-automation" hidden>
+<div class="panel-heading"><div><h3>Запусти сценарий обработки</h3><p>Прототип правила для Битрикс24 или Power Automate.</p></div></div>
+<div class="two"><div class="subcard simulator"><label for="scenario">Входное событие</label><select id="scenario"><option value="cancel">Клиника отменила слот</option><option value="duplicate">Повтор события отмены</option><option value="conflict">Новый слот уже занят</option><option value="timeout">Прошло 30 минут без реакции</option></select><button class="button primary" id="run-scenario">Запустить сценарий <span class="diagonal" aria-hidden="true">→</span></button></div><div class="subcard event-log" aria-live="polite"><h4>Журнал обработки</h4><ol id="events"><li>Выбери событие и запусти сценарий.</li></ol></div></div>
+<div class="subcard lower"><h4>Конфигурация пилота</h4><p>Событие расписания → журнал входящих событий → задача в очереди CRM → таймер SLA → эскалация. В карточке достаточно ID записи, времени отмены, причины и ответственного. Подбор нового слота остаётся у оператора. В тестовом контуре я бы проверила повтор webhook, конфликт бронирования, права доступа и журналирование.</p></div>
+</div>
+<div class="panel" role="tabpanel" id="data" aria-labelledby="tab-data" hidden>
+<div class="panel-heading"><div><h3>Модель данных и выборка</h3><p>Единица анализа — первичная запись. Её исход учитывает подтверждённую перезапись.</p></div></div>
+<div class="data-model"><div><b>bookings</b><small>PK booking_id · FK clinic_id<br>created_at · channel · cohort · outcome</small></div><span>1 → N</span><div><b>booking_events</b><small>PK event_id · FK booking_id<br>event_type · occurred_at</small></div><span>1 → 0..1</span><div><b>crm_tasks</b><small>PK task_id · FK trigger_event_id UNIQUE<br>assigned_at · first_action_at · closed_at</small></div></div>
+<div class="two data-grid"><div class="subcard"><h4>SQL · доля состоявшихся визитов</h4><pre id="sql-preview"></pre><a class="text-link" href="visits.sql" download>Скачать SQL ↓</a></div><div class="subcard"><h4>Excel · проверка данных и расчёт KPI</h4><p>В книге 100 демонстрационных записей, контроль дубликатов и пропусков, расчёты по периодам и каналам с COUNTIFS и SUMIFS. Исходные строки можно сверить с дашбордом.</p><a class="text-link" href="booking-analysis.xlsx" download>Скачать книгу Excel ↓</a></div></div>
+</div></div>
+</section>
+<section id="analytics" class="analytics section"><div class="wrap">
+<div class="section-title"><div><p class="eyebrow"><i></i> Аналитика пилота</p><h2>Как проверить эффект</h2></div><p>Сравниваю две условные когорты по 50 записей. Фильтр показывает, как меняются метрики для каждого канала.</p></div>
+<div class="dashboard"><div class="dash-head"><div><h3>Воронка записи</h3><span id="sample">100 демозаписей</span></div><label for="channel">Канал <select id="channel"><option value="all">Все каналы</option><option value="web">Сайт</option><option value="phone">Контакт-центр</option></select></label></div>
+<div class="kpis" id="kpis" aria-live="polite"></div><div class="dash-body"><div><div class="bar-head"><h4>Путь до визита</h4><div class="legend"><span><i></i> До</span><span><i></i> После</span></div></div><div id="funnel" aria-live="polite"></div></div>
+<div class="dash-aside"><h4>План контрольного замера</h4><ol><li><b>До запуска.</b> Фиксирую определения, окно наблюдения 14 дней и порог успеха: +5 п. п. к доле визитов.</li><li><b>Через месяц.</b> Сравниваю зрелые когорты пилотных и сопоставимых клиник по каналам, проверяю нагрузку и время реакции.</li><li><b>Через 3 месяца.</b> Проверяю устойчивость эффекта, долю жалоб и повторных обращений. Учитываю сезонность и доступность слотов.</li></ol></div></div>
+<div class="dash-footer"><a class="text-link" href="booking-analysis.xlsx" download>Книга Excel ↓</a><button class="link-button" id="export">Скачать CSV по фильтру ↓</button></div></div>
+<div class="economy"><div><h3>Экономика решения</h3><p>Меняй объём записей и ожидаемый прирост. Иллюстративный расчёт использует 500 ₽ вклада на состоявшийся визит и 25 000 ₽ ежемесячных затрат.</p></div><div class="economy-controls"><label>Записей в месяц<input id="volume" type="number" min="0" max="1000000" value="1000" step="1"></label><label>Прирост, п. п.<input id="uplift" type="number" min="0" max="100" value="5" step="0.1"></label></div><div class="economy-result"><b id="money" aria-live="polite">0 ₽</b><span>Расчётный эффект в месяц</span></div></div>
+</div></section>
+<section class="section wrap" id="launch"><div class="section-title"><div><p class="eyebrow"><i></i> План запуска</p><h2>Что беру в пилот</h2></div><p>Начинаю с очереди отмен и измерения реакции. К автоматическому подбору слотов перехожу после проверки качества событий и исходов задач.</p></div>
+<div class="priority"><div><span>Сначала</span><h3>Очередь отмен + SLA</h3><p>3–5 рабочих дней по предварительной оценке. Владелец очереди — контакт-центр, источник событий — команда расписания. На первом пилоте достаточно одной клиники.</p></div><div><span>Следом</span><h3>Дашборд пилота</h3><p>2–3 дня после стабилизации событий. Сверяю определения с владельцем продукта, добавляю контроль пропусков, фиксирую исходные метрики.</p></div><div><span>После замера</span><h3>Предложение слота</h3><p>5–10 дней после проверки API. Перед оценкой уточняю правила клиники, конкуренцию за слот и порядок подтверждения пациентом.</p></div></div>
+<p class="launch-note">На старте согласую объём, критерии приёмки и владельцев. Ограничения по связи и хранению данных обсуждаю с ИБ и юристом, правила переноса — с представителем клиник. Прогресс, риски и изменения объёма фиксирую в еженедельном статусе.</p></section>
+<section class="experience section" id="experience"><div class="wrap experience-grid"><div><p class="eyebrow"><i></i> Екатерина Дружинская</p><h2>Автоматизирую<br>ручную работу</h2><p>Перевожу правила и исключения из рабочих таблиц в понятный процесс, который коллеги могут проверить и использовать.</p><a class="button outline" href="https://druzhinskaia.github.io/">Открыть сайт-резюме <span class="diagonal" aria-hidden="true">→</span></a></div><div class="proof"><article><strong>120–140</strong><div><h3>организаций в контуре отчётности</h3><p>В ИТЦ «Соцзащита» Москвы автоматизировала сбор и проверку отчётности с помощью Excel и VBA. Настроила валидацию ввода, написала инструкцию и обучила коллег.</p></div></article><article><strong>1С</strong><div><h3>Сверка платежей и поиск расхождений</h3><p>Разработала логику сопоставления выгрузок 1С:БГУ и реестра платежей. Задала приоритет признаков, учла неоднозначные совпадения и выделила строки для ручной проверки.</p></div></article></div></div></section>
+</main>
+<footer><div class="wrap"><span>Екатерина Дружинская · Портфолио</span><a href="#top">Наверх ↑</a></div></footer>
+</body></html>

@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Закрытие смены · Екатерина Дружинская</title>
+<meta name="description" content="Интерактивный кейс финансового менеджера. Сверка платёжных систем, контроль остатков и имитация вывода.">
+<meta name="theme-color" content="#14282c"><link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="style.css">
+<script src="model.js" defer></script><script src="app.js" defer></script>
+</head>
+<body>
+<header><div class="wrap top"><a href="../" class="brand"><span aria-hidden="true">↖</span> Кейсы под вакансии</a><nav aria-label="Разделы"><a href="#recon">Сверка</a><a href="#payout">Вывод</a><a href="#method">Файлы</a></nav><a class="top-link" href="https://druzhinskaia.github.io/">Резюме →</a></div></header>
+<main id="top">
+<section class="hero"><div class="wrap hero-grid">
+<div><p class="kicker"><i></i> Интерактивный кейс финансового менеджера</p><h1>Закрытие<br><em>смены.</em></h1><p class="lead">Выписка и реестр разошлись. Найди причины, сведи остатки и проверь, какие заявки на вывод можно провести.</p><div class="actions"><button class="btn primary" id="launch">Начать смену <span aria-hidden="true">→</span></button><a class="btn outline" href="#method">Посмотреть расчёты</a></div></div>
+<div class="screen"><div class="screen-head"><b><i></i> Платёжные операции</b><span>ДЕМО</span></div><div class="screen-body"><div class="screen-title"><div><small>Готовность к закрытию</small><strong id="hero-percent">0%</strong></div><div class="stamp" id="hero-label">18:40</div></div><div class="progress" aria-hidden="true"><i id="progress"></i></div><div class="hero-accounts" id="hero-accounts"></div></div><div class="screen-footer"><span id="hero-event">Выписка готова к сверке</span><b>EUR / USD</b></div></div>
+</div></section>
+<section id="recon" class="wrap section"><div class="section-head"><div><p class="kicker"><i></i> Сверка платёжных систем</p><h2>Найди расхождения.</h2></div><p>Разбирай исключения по первичным данным. Каждое действие обновляет расчётный остаток и журнал. В наборе есть операции на одинаковую сумму.</p></div>
+<div class="board"><div class="board-top"><div><h3>Результат импорта</h3><p id="recon-summary" aria-live="polite"></p></div><div class="selects"><label>Счёт <select id="account"><option value="all">Все счета</option><option value="ALPHA">PSP Alpha · EUR</option><option value="BETA">PSP Beta · EUR</option><option value="DELTA">PSP Delta · USD</option></select></label><button class="btn mini outline" id="reset">Сбросить демо</button></div></div><div class="balances" id="balances"></div>
+<div class="workbench"><div><div class="subhead"><h3>Очередь исключений</h3><button class="text-btn" id="export-exceptions">CSV ↓</button></div><div class="issue-list" id="issues"></div></div><div class="detail" id="issue-detail"></div></div>
+</div></section>
+<section id="payout" class="section payout-section"><div class="wrap">
+<div class="section-head"><div><p class="kicker"><i></i> Контроль вывода</p><h2>Что можно провести?</h2></div><p>В демо заявка проходит только после сверки счёта и проверки резерва. Любой проведённый вывод отражается в остатке и в журнале.</p></div>
+<div class="payout-grid" id="payouts"></div>
+<div class="journal"><div class="subhead"><div><h3>Журнал операций</h3><p>Корректировки, переносы и выводы с основанием.</p></div><button class="text-btn" id="export-log">Скачать журнал CSV ↓</button></div><div id="journal-rows"></div></div>
+</div></section>
+<section id="method" class="wrap section"><div class="section-head"><div><p class="kicker"><i></i> Методика и файлы</p><h2>Проверь расчёты.</h2></div><p>Все суммы и платёжные системы в кейсе вымышлены. Демо не подключено к внешним сервисам и не выполняет реальные операции.</p></div>
+<div class="method-grid"><article><h3>Excel-сверка</h3><p>Сырые строки, контроль дубликатов, сопоставление, сверка оборотов и остатков. Суммы хранятся в центах для точных расчётов.</p><a href="finance-reconciliation.xlsx" download>Скачать Excel ↓</a></article><article><h3>Исходные данные</h3><p>Выгрузка внутреннего реестра и выписка трёх платёжных систем. В выписке есть намеренно добавленные расхождения.</p><a href="ledger.csv" download>Реестр CSV ↓</a><a href="statement.csv" download>Выписка CSV ↓</a></article><article><h3>Правила контроля</h3><details><summary>Сверка и остатки</summary><p>Ключ сопоставления — счёт, валюта и ID операции. Повтор строки выписки исключается до суммирования. Закрытие: начальный остаток + подтверждённые обороты − проведённый вывод. EUR и USD считаются отдельно.</p></details><details><summary>Подтверждения и исключения</summary><p>Комиссия проводится по отчёту провайдера, операция следующего дня переносится на контроль. Для неясных случаев нужна первичка и согласование ответственного. Запись содержит основание, сумму и исходный ID.</p></details></article></div>
+<div class="author"><div><h3>Екатерина Дружинская</h3><p>Сверяла выгрузки 1С:БГУ с реестрами платежей, задавала приоритеты признаков и выделяла исключения для ручной проверки. Автоматизировала отчётность для 120–140 организаций в Excel и VBA.</p></div><a class="btn primary" href="https://druzhinskaia.github.io/">Сайт-резюме →</a></div>
+</section>
+</main><footer><div class="wrap"><span>Закрытие смены · Авторский кейс на синтетических данных</span><a href="#top">Наверх ↑</a></div></footer>
+</body></html>

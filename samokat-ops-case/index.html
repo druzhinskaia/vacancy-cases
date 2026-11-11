@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Пик в 19:00 · Екатерина Дружинская</title>
+<meta name="description" content="Интерактивный кейс операционной аналитики для команды Самоката. Найдите причину просадки SLA и выберите решение на синтетических данных.">
+<meta name="theme-color" content="#20131d">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<script src="model.js" defer></script>
+<script src="app.js" defer></script>
+</head>
+<body>
+<header><div class="wrap top">
+<a class="identity" href="#top"><span class="symbol" aria-hidden="true"><i></i><i></i><i></i></span><span>Пик в 19:00</span></a>
+<nav aria-label="Разделы"><a href="#simulator">Симулятор</a><a href="#orders">Выгрузка</a><a href="#method">Методика</a></nav>
+<a class="top-link" href="https://druzhinskaia.github.io/">Резюме <span aria-hidden="true">→</span></a>
+</div></header>
+<main id="top">
+<section class="hero"><div class="wrap hero-grid">
+<div class="intro"><p class="overline"><span></span> Аналитический кейс для команды «Самоката»</p>
+<h1>Пик<br>в <em>19:00<span>.</span></em></h1>
+<p class="lede">Спрос резко растёт. Заказы идут с опозданием. За одну смену найди узкое место и проверь, какое решение окупится.</p>
+<div class="hero-actions"><button class="button hot" id="start">Запустить вечерний пик <span aria-hidden="true">→</span></button><a class="button soft" href="#simulator">Открыть дашборд</a></div>
+</div>
+<div class="hero-art">
+<div class="radar" aria-hidden="true"></div>
+<div class="dispatch"><div class="dispatch-head"><span><i></i> Пульт операционной смены</span><b>ДЕМО</b></div>
+<div class="dispatch-body"><div class="dispatch-heading"><div><small>Спрос за интервал</small><strong id="hero-count">57</strong></div><div class="clock" id="hero-clock">18:00</div></div>
+<div class="mini-chart" id="mini-chart" aria-label="График спроса по шести интервалам"></div><div class="mini-axis"><span>18:00</span><span>19:00</span><span>19:40</span></div></div>
+<div class="dispatch-foot"><span>Север</span><span>Центр</span><span>Юг</span></div></div>
+<div class="incident" id="incident"><b aria-hidden="true">!</b><div><strong id="incident-title">Смена открыта</strong><small id="incident-detail">Проверь, что будет при пике</small></div></div>
+</div></div></section>
+<section class="console section wrap" id="simulator">
+<div class="section-head"><div><p class="overline"><span></span> Симулятор смены</p><h2>Что сломалось в пике?</h2></div><p>Переключи сценарий, найди проблемную зону и сравни эффект решений. Все показатели считаются из одних и тех же демонстрационных заказов.</p></div>
+<div class="control-board"><div class="control-top">
+<div class="mode" aria-label="Сценарий смены"><button data-scenario="base" aria-pressed="true">Обычная смена</button><button data-scenario="peak" aria-pressed="false">Вечерний пик</button></div>
+<div class="selectors"><label>Зона <select id="zone"><option value="all">Все зоны</option><option value="north">Север</option><option value="center">Центр</option><option value="south">Юг</option></select></label><label>Время <select id="slot"><option value="all">Вся смена</option><option>18:00</option><option>18:20</option><option>18:40</option><option>19:00</option><option>19:20</option><option>19:40</option></select></label></div>
+</div>
+<div class="status-line" role="status" id="status"></div>
+<div class="metrics" id="metrics"></div>
+<div class="viz-row">
+<div class="viz"><div class="viz-head"><div><h3>Спрос по времени</h3><p>Нажми на столбец, чтобы открыть интервал</p></div><button class="quiet" id="clear-slot">Вся смена</button></div><div class="bars" id="bars"></div></div>
+<div class="viz"><div class="viz-head"><div><h3>Где теряем минуты</h3><p>Среднее по доставленным заказам</p></div></div><div class="stages" id="stages"></div><div class="diagnostic" id="diagnostic"></div></div>
+</div>
+</div>
+<div class="decision"><div class="decision-intro"><p class="overline"><span></span> Решение для штаба</p><h3>Что меняем?</h3><p>Меры действуют в Центре с 19:00. Сравнение идёт по всей смене пика до и после выбранной меры.</p></div>
+<div class="choices" aria-label="Решение"><button data-action="none" aria-pressed="true">Без изменений</button><button data-action="couriers" aria-pressed="false">Добавить курьеров</button><button data-action="assembly" aria-pressed="false">Усилить сборку</button><button data-action="throttle" aria-pressed="false">Ограничить приём</button></div>
+<div id="decision-result" class="decision-result" aria-live="polite"></div>
+</div>
+</section>
+<section class="section records" id="orders"><div class="wrap">
+<div class="section-head"><div><p class="overline"><span></span> Заказы и качество данных</p><h2>Докопаться до строки.</h2></div><p>Данные отфильтрованы по сценарию, зоне и времени. Меняй тип строк и выгружай нужную выборку для ad hoc запроса.</p></div>
+<div class="table-box">
+<div class="table-head"><div class="mode" aria-label="Набор заказов"><button data-view="all" aria-pressed="true">Все валидные</button><button data-view="late" aria-pressed="false">Просрочки</button><button data-view="invalid" aria-pressed="false">Ошибки данных</button></div><button class="button dark" id="download">Скачать CSV ↓</button></div>
+<div id="quality" class="quality" role="status"></div>
+<div class="table-scroll"><table><thead><tr><th>Заказ</th><th>Зона</th><th>Интервал</th><th>Сборка</th><th>Ожидание</th><th>В пути</th><th>Итого</th><th>Чек</th><th>Статус</th></tr></thead><tbody id="rows"></tbody></table></div>
+<div class="pagination"><span id="page-status" aria-live="polite"></span><div><button class="quiet" id="previous">Назад</button><button class="quiet" id="next">Дальше</button></div></div>
+</div>
+</div></section>
+<section class="section wrap" id="method">
+<div class="section-head"><div><p class="overline"><span></span> Методика и файлы</p><h2>Повторить расчёт.</h2></div><p>Данные, порог SLA в 25 минут, целевая доля SLA 85% и ставки в модели условные. Кейс показывает мой подход к операционной аналитике.</p></div>
+<div class="artifact-grid">
+<article><h3>Рабочая книга Excel</h3><p>Первичные строки, контроль дубликатов и пропусков, сводка SLA, спроса и вклада до применения мер. В расчётах используются COUNTIFS, SUMIFS и формулы валидации.</p><a href="shift-analysis.xlsx" download>Скачать Excel ↓</a></article>
+<article><h3>Power Query</h3><p>M-запрос читает исходный CSV, задаёт типы и отделяет дубликаты, пропуски и отрицательные значения. На выходе две таблицы для проверки.</p><a href="validation.pq" download>Скачать M-запрос ↓</a><a href="peak-raw.csv" download>Скачать сырой CSV ↓</a></article>
+<article><h3>Определения KPI</h3><details><summary>Как считаются показатели</summary><p>SLA: доставленные за 25 минут или быстрее / все доставленные. Исполнение спроса: доставленные / все валидные заявки. Выручка: сумма чеков доставленных заказов. Вклад: 24% чека доставленных заказов минус переменные расходы и стоимость меры. Это расчётная модель, без постоянных расходов.</p></details><details><summary>Что проверю перед внедрением</summary><p>Разложу опоздания по этапам и зонам, сравню сопоставимые интервалы и сверю покрытие событий. Для пилота зафиксирую SLA, исполнение спроса и вклад, затем проверю их на нескольких сменах.</p></details></article>
+</div>
+<div class="author"><div><h3>Екатерина Дружинская</h3><p>Автоматизировала отчётность для 120–140 организаций в Excel и VBA. Проектировала сверку выгрузок 1С:БГУ, правила сопоставления и ручной разбор исключений.</p></div><a class="button dark" href="https://druzhinskaia.github.io/">Сайт-резюме →</a></div>
+</section>
+</main>
+<footer><div class="wrap"><span>Пик в 19:00 · Авторский кейс на синтетических данных</span><a href="#top">Наверх ↑</a></div></footer>
+</body></html>

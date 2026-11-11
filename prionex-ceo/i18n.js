@@ -1,6 +1,20 @@
 const BriefLanguage = {
  ru: {
   locale:'ru-RU',
+  allPortfolios:'Все портфели с фактом',
+  aiScope:(portfolio,scenario)=>`${portfolio} · ${scenario}`,
+  copied:'Запрос скопирован.',
+  copyManually:'Скопируй выделенный текст вручную.',
+  invalidJson:'Вставь полный JSON из ответа модели и попробуй снова.',
+  missingNumber:'нужно целое число',
+  difference:(received,expected)=>`ответ ${received}, расчёт ${expected}`,
+  wrongRows:rows=>`Ожидаемые строки источника — ${rows}.`,
+  exampleSummary:'Сначала сверить исходные поступления и остатки, затем обновить прогноз.',
+  modelNotes:'Текст модели для ручной проверки',
+  prompt:`Подготовь короткую сводку для CEO по синтетическим данным CRM взыскания ниже. Используй только выбранный срез и сценарий.
+Для каждого портфеля бери первую валидную строку по row_id. Валидная строка содержит остаток в работе больше нуля и платежи от нуля до этого остатка включительно. Пропуски, неверные строки и дубликаты исключи из всех сумм.
+Сложи платежи, планы на месяц и планы на дату. План на дату по строке равен planned_balance_eur × planned_recovery_rate. Отклонение равно факту минус план на дату. Прогноз округли до целого евро после расчёта: факт + (факт / elapsed_days) × (total_days − elapsed_days) × remaining_pace_factor.
+Верни один JSON-объект. Поля actual_eur, cutoff_target_eur, variance_eur, forecast_eur и month_target_eur должны содержать целые числа. Поле source_row_ids должно содержать массив целых ID принятых строк. В summary укажи риск, ограничение покрытия и ближайшее действие в двух предложениях. Если упоминаешь SMS, представь связь с возвратом как гипотезу. Ответ напиши на русском.`,
   portfolios:{NORTH:'Север',EAST:'Восток',WEST:'Запад',SOUTH:'Юг'},
   metrics:['План на день 12','Получено к дню 12','Отклонение','Прогноз / план месяца'],
   drivers:['Эффект объёма портфеля','Эффект доли возврата'],
@@ -26,15 +40,26 @@ const BriefLanguage = {
   done:'выполнено',overdue:'просрочено',reopen:'Переоткрыть',mark:'Отметить выполненным',empty:'По выбранному портфелю открытых вопросов в реестре нет.',
   scenario:{base:'Базовый',low:'Стресс',high:'Ускорение'},
   brief:(ids,scenario,actual,cutoff,gap,forecast,plan,next)=>`Строки источника: ${ids} · ${scenario}\nК дню 12 поступило ${actual} при плане ${cutoff} (${gap}). Прогноз — ${forecast} при плане месяца ${plan}.\nДействие: ${next}`,
-  noDraft:'Выбери срез и собери сводку.',
   blocked:'Выгрузка заблокирована.',
-  error:(draft,model)=>`В черновике прогноз ${draft}, по расчёту ${model}.`,
-  mismatch:'Цифры или строки источника расходятся.',
   checked:'Пять числовых полей и ссылки на строки совпадают с расчётом.',
   exportTitle:'Сводка для CEO · демоданные'
  },
  en: {
   locale:'en-GB',
+  allPortfolios:'All reporting portfolios',
+  aiScope:(portfolio,scenario)=>`${portfolio} · ${scenario}`,
+  copied:'Prompt copied.',
+  copyManually:'Copy the selected text manually.',
+  invalidJson:'Paste the complete JSON from the model reply and try again.',
+  missingNumber:'whole number required',
+  difference:(received,expected)=>`reply ${received}, calculation ${expected}`,
+  wrongRows:rows=>`Expected source rows: ${rows}.`,
+  exampleSummary:'Reconcile collections and assigned balances, then update the forecast.',
+  modelNotes:'Model text for manual review',
+  prompt:`Write a short CEO brief based on the synthetic debt collection CRM data below. Use the selected scope and scenario.
+Keep the first valid row by row_id for each portfolio. A valid row has an assigned balance above zero and payments between zero and that balance, inclusive. Exclude missing, invalid and duplicate rows from all totals.
+Sum payments, monthly targets and targets to date. A row’s target to date is planned_balance_eur × planned_recovery_rate. Variance is actual minus target to date. Round the forecast to whole euros after applying this formula: actual + (actual / elapsed_days) × (total_days − elapsed_days) × remaining_pace_factor.
+Return a single JSON object. The fields actual_eur, cutoff_target_eur, variance_eur, forecast_eur and month_target_eur must be integers. The field source_row_ids must be an array of integer IDs for accepted rows. In summary, describe the risk, coverage limit and next action in two sentences. If you mention SMS delivery, treat its link to collections as a hypothesis. Write in English.`,
   portfolios:{NORTH:'North',EAST:'East',WEST:'West',SOUTH:'South'},
   metrics:['Day 12 target','Collected by day 12','Variance','Forecast / monthly target'],
   drivers:['Portfolio balance effect','Recovery rate effect'],
@@ -60,10 +85,7 @@ const BriefLanguage = {
   done:'completed',overdue:'overdue',reopen:'Reopen',mark:'Mark complete',empty:'There are no tracked actions for this portfolio.',
   scenario:{base:'Baseline',low:'Stress case',high:'Faster pace'},
   brief:(ids,scenario,actual,cutoff,gap,forecast,plan,next)=>`Source rows: ${ids} · ${scenario}\nCollected by day 12: ${actual} against ${cutoff} (${gap}). Month-end forecast: ${forecast} against ${plan}.\nAction: ${next}`,
-  noDraft:'Choose a reporting scope and build the draft.',
   blocked:'Export blocked.',
-  error:(draft,model)=>`Draft forecast is ${draft}, while the model gives ${model}.`,
-  mismatch:'Figures or source rows do not match.',
   checked:'All five numeric fields and source rows match the calculation.',
   exportTitle:'CEO brief · synthetic data'
  }

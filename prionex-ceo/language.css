@@ -17,3 +17,15 @@
 .metrics article strong {font-size:clamp(1rem,2.3vw,1.65rem);overflow-wrap:anywhere}
 .panel h4 {margin:12px 12px 0;color:var(--focus);font-size:.86rem}
 .source-note {padding-left:0;text-decoration:underline;text-underline-offset:3px}
+
+.ai-panel label {display:block;margin-top:12px;font-weight:650}
+.ai-panel textarea {
+  display:block;width:100%;margin-top:8px;padding:10px;resize:vertical;
+  border:1px solid var(--line);border-radius:8px;background:#fff;color:var(--ink);
+  font:0.82rem/1.5 ui-monospace,monospace;
+}
+.ai-panel textarea:focus-visible {outline:2px solid var(--focus);outline-offset:2px}
+.ai-panel #ai-prompt {background:var(--wash)}
+.ai-panel #copy-status, .ai-panel #validation, .ai-panel .api-note {font-size:0.9rem}
+.ai-panel #validation, .ai-panel #model-summary {white-space:pre-wrap;overflow-wrap:anywhere}
+.ai-panel .api-note {color:var(--muted)}

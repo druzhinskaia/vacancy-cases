@@ -1,6 +1,6 @@
 const byId = id => document.getElementById(id);
 const n = new Intl.NumberFormat('ru-RU',{maximumFractionDigits:1});
-const signed = new Intl.NumberFormat('ru-RU',{maximumFractionDigits:1,signDisplay:'exceptZero'});
+const signed = value => (value>=0.05?'+':'')+n.format(Math.abs(value)<0.05?0:value);
 const rub = new Intl.NumberFormat('ru-RU',{style:'currency',currency:'RUB',maximumFractionDigits:0});
 const fmt = (value,suffix='') => value===null ? '—' : n.format(value)+suffix;
 const pct = value => fmt(value===null?null:value*100,'%');
@@ -9,7 +9,15 @@ const state = {scenario:'base',zone:'all',slot:'all',decision:'none',view:'all',
 const sources = Object.fromEntries(Object.keys(Shift.scenarios).map(scenario=>[scenario,Shift.validate(Shift.rawOrders(scenario))]));
 const match = (row,slot=true) => (state.zone==='all'||row.zone===state.zone) && (!slot||state.slot==='all'||row.slot===state.slot);
 const pageSize = 8;
-let shown = [], playTimer = 0;
+let shown = [];
+const intervalButtons = Shift.times.map(slot => {
+  const button = document.createElement('button');
+  button.type = 'button';
+  button.dataset.slot = slot;
+  button.innerHTML = '<b></b><i aria-hidden="true"></i><small>'+slot+'</small>';
+  byId('bars').append(button);
+  return button;
+});
 function setButtons(selector,key,current) {
   document.querySelectorAll(selector).forEach(button=>button.setAttribute('aria-pressed',button.dataset[key]===current));
 }
@@ -34,16 +42,19 @@ function dashboard(orders) {
   byId('metrics').innerHTML = metrics.map(([label,value,warning])=>'<article><small>'+label+'</small><strong class="'+(warning?'bad':'')+'">'+value+'</strong></article>').join('');
   byId('status').textContent = Shift.scenarios[state.scenario]+' · '+result.delivered+' доставлено из '+result.demand+' заявок · '+result.late+' за пределами SLA · '+result.deferred+' отложено';
   const volumes = Shift.times.map(slot=>orders.filter(row=>row.slot===slot&&match(row,false)).length);
-  byId('bars').innerHTML = volumes.map((value,i)=>{
-    const slot=Shift.times[i];
-    return '<button data-slot="'+slot+'" aria-label="'+slot+' — '+value+' заявок" aria-pressed="'+(slot===state.slot)+'"><b>'+value+'</b><i style="--h:'+value/Math.max(1,...volumes)*78+'%"></i><small>'+slot+'</small></button>';
-  }).join('');
+  intervalButtons.forEach((button,i) => {
+    const slot = Shift.times[i], value = volumes[i];
+    button.setAttribute('aria-label',slot+' — '+value+' заявок');
+    button.setAttribute('aria-pressed',slot===state.slot);
+    button.querySelector('b').textContent = value;
+    button.querySelector('i').style.setProperty('--h',value/Math.max(1,...volumes)*78+'%');
+  });
   byId('clear-slot').disabled = state.slot==='all';
   const phases = [['Сборка','pick'],['Ждём курьера','wait'],['В пути','ride']];
   byId('stages').innerHTML = phases.map(([label,key])=>'<div class="stage"><span>'+label+'</span><div><i style="width:'+((result[key]??0)/Math.max(1,result.pick,result.wait,result.ride)*100)+'%"></i></div><b>'+fmt(result[key],' мин')+'</b></div>').join('');
   const baseline = Shift.summarize(Shift.applyDecision(sources.base.valid,'none').filter(row=>match(row)));
   const delta = result.wait===null || baseline.wait===null ? null : result.wait-baseline.wait;
-  byId('diagnostic').textContent = delta===null?'Нет доставленных заказов в этом срезе.':'Ожидание курьера к обычной смене: '+signed.format(delta)+' мин. Сравнение для тех же зоны и времени.';
+  byId('diagnostic').textContent = delta===null?'Нет доставленных заказов в этом срезе.':'Ожидание курьера к обычной смене: '+signed(delta)+' мин. Сравнение для тех же зоны и времени.';
 }
 function compare() {
   const rawPeak=sources.peak.valid;
@@ -56,9 +67,9 @@ function compare() {
     throttle:'Каждая четвёртая заявка в зоне действия откладывается, у остальных ожидание сокращается на срок до 5 минут. Проверяй исполнение спроса вместе с SLA.'
   };
   const deltas = [
-    ['SLA',pct(before.rate),pct(after.rate),signed.format((after.rate-before.rate)*100)+' п. п.'],
-    ['Исполнение',pct(before.fulfilment),pct(after.fulfilment),signed.format((after.fulfilment-before.fulfilment)*100)+' п. п.'],
-    ['Вклад',rub.format(before.contribution),rub.format(after.contribution),signed.format(after.contribution-before.contribution)+' ₽']
+    ['SLA',pct(before.rate),pct(after.rate),signed((after.rate-before.rate)*100)+' п. п.'],
+    ['Исполнение',pct(before.fulfilment),pct(after.fulfilment),signed((after.fulfilment-before.fulfilment)*100)+' п. п.'],
+    ['Вклад',rub.format(before.contribution),rub.format(after.contribution),signed(after.contribution-before.contribution)+' ₽']
   ];
   const extraOnTime = (after.delivered-after.late)-(before.delivered-before.late);
   const costPerOrder = extraOnTime>0 ? (before.contribution-after.contribution)/extraOnTime : null;
@@ -100,18 +111,11 @@ function update(changes) {
   Object.assign(state,{page:0},changes);
   render();
 }
-function cancelReplay() {
-  clearInterval(playTimer);
-  playTimer=0;
-  byId('start').disabled=false;
-}
 document.querySelectorAll('[data-scenario]').forEach(button=>button.addEventListener('click',()=>{
-  cancelReplay();
   update({scenario:button.dataset.scenario,decision:'none'});
   hero(state.scenario,state.scenario==='peak'?4:0);
 }));
 document.querySelectorAll('[data-action]').forEach(button=>button.addEventListener('click',()=>{
-  cancelReplay();
   update({scenario:'peak',decision:button.dataset.action});
   hero('peak',4);
 }));
@@ -123,9 +127,8 @@ byId('bars').addEventListener('click',event=>{
   if (!button) return;
   const {slot} = button.dataset;
   update({slot});
-  byId('bars').querySelector('[data-slot="'+slot+'"]').focus({preventScroll:true});
 });
-byId('clear-slot').addEventListener('click',()=>{update({slot:'all'});byId('slot').focus({preventScroll:true});});
+byId('clear-slot').addEventListener('click',()=>update({slot:'all'}));
 byId('previous').addEventListener('click',()=>{state.page--;render();});
 byId('next').addEventListener('click',()=>{state.page++;render();});
 byId('download').addEventListener('click',()=>{
@@ -137,23 +140,10 @@ byId('download').addEventListener('click',()=>{
   a.click();
   setTimeout(()=>URL.revokeObjectURL(url),1000);
 });
-byId('start').addEventListener('click',()=>{
-  const finish=()=>{
-    cancelReplay();
-    hero('peak',4);
-    update({scenario:'peak',zone:'all',slot:'all',decision:'none',view:'all'});
-    byId('simulator').scrollIntoView({block:'start'});
-    document.querySelector('[data-scenario="peak"]').focus({preventScroll:true});
-  };
-  if (matchMedia('(prefers-reduced-motion: reduce)').matches) {finish();return;}
-  byId('start').disabled=true;
-  let frame=0;
-  hero('peak',frame);
-  playTimer=setInterval(()=>{
-    frame++;
-    hero('peak',frame);
-    if(frame===4) finish();
-  },260);
+byId('start').addEventListener('click',event=>{
+  hero('peak',4);
+  update({scenario:'peak',zone:'all',slot:'all',decision:'none',view:'all'});
+  if (event.currentTarget.tagName === 'BUTTON') location.hash = 'simulator';
 });
 hero('base',0);
 render();

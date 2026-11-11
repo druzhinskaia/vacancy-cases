@@ -8,7 +8,7 @@
 <script src="model.js" defer></script><script src="app.js" defer></script>
 </head>
 <body>
-<header><div class="wrap top"><a href="../" class="brand"><span aria-hidden="true" style="transform:rotate(180deg)">→</span> Кейсы под вакансии</a><nav aria-label="Разделы"><a href="#recon">Сверка</a><a href="#payout">Вывод</a><a href="#method">Файлы</a></nav><a class="top-link" href="https://druzhinskaia.github.io/">Резюме →</a></div></header>
+<header><div class="wrap top"><span class="brand"><span aria-hidden="true">✓</span> Закрытие смены</span><nav aria-label="Разделы"><a href="#recon">Сверка</a><a href="#payout">Вывод</a><a href="#method">Файлы</a></nav></div></header>
 <main id="top">
 <section class="hero"><div class="wrap hero-grid">
 <div><p class="kicker"><i></i> Интерактивный кейс финансового менеджера</p><h1>Закрытие<br><em>смены.</em></h1><p class="lead">Выписка и реестр разошлись. Найди причины, сведи остатки и проверь, какие заявки на вывод можно провести.</p><div class="actions"><button class="btn primary" id="launch">Начать смену <span aria-hidden="true">→</span></button><a class="btn outline" href="#method">Посмотреть расчёты</a></div></div>
@@ -25,7 +25,7 @@
 </div></section>
 <section id="method" class="wrap section"><div class="section-head"><div><p class="kicker"><i></i> Методика и файлы</p><h2>Проверь расчёты.</h2></div><p>Все суммы и платёжные системы в кейсе вымышлены. Демо не подключено к внешним сервисам и не выполняет реальные операции.</p></div>
 <div class="method-grid"><article><h3>Excel-сверка</h3><p>Сырые строки, контроль дубликатов, сопоставление, сверка оборотов и остатков. Суммы хранятся в центах для точных расчётов.</p><a href="finance-reconciliation.xlsx" download>Скачать Excel ↓</a></article><article><h3>Исходные данные</h3><p>Выгрузка внутреннего реестра и выписка трёх платёжных систем. В выписке есть намеренно добавленные расхождения.</p><a href="ledger.csv" download>Реестр CSV ↓</a><a href="statement.csv" download>Выписка CSV ↓</a></article><article><h3>Правила контроля</h3><details><summary>Сверка и остатки</summary><p>Ключ сопоставления — счёт, валюта и ID операции. Повтор строки выписки исключается до суммирования. Закрытие: начальный остаток + подтверждённые обороты − проведённый вывод. EUR и USD считаются отдельно.</p></details><details><summary>Подтверждения и исключения</summary><p>Комиссия проводится по отчёту провайдера, операция следующего дня переносится на контроль. Для неясных случаев нужна первичка и согласование ответственного. Запись содержит основание, сумму и исходный ID.</p></details></article></div>
-<div class="author"><div><h3>Екатерина Дружинская</h3><p>Сверяла выгрузки 1С:БГУ с реестрами платежей, задавала приоритеты признаков и выделяла исключения для ручной проверки. Автоматизировала отчётность для 120–140 организаций в Excel и VBA.</p></div><a class="btn primary" href="https://druzhinskaia.github.io/">Сайт-резюме →</a></div>
+<div class="author"><div><h3>Екатерина Дружинская</h3><p>Сверяла выгрузки 1С:БГУ с реестрами платежей, задавала приоритеты признаков и выделяла исключения для ручной проверки. Автоматизировала отчётность для 120–140 организаций в Excel и VBA.</p></div></div>
 </section>
 </main><footer><div class="wrap"><span>Закрытие смены · Авторский кейс на синтетических данных</span><a href="#top">Наверх ↑</a></div></footer>
 </body></html>

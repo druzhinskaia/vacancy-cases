@@ -7,9 +7,9 @@
 <meta name="description" content="Интерактивный кейс операционной аналитики для команды Самоката. Найдите причину просадки SLA и выберите решение на синтетических данных.">
 <meta name="theme-color" content="#20131d">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="style.css?v=2">
 <script src="model.js" defer></script>
-<script src="app.js" defer></script>
+<script src="app.js?v=2" defer></script>
 </head>
 <body>
 <header><div class="wrap top">
@@ -22,7 +22,7 @@
 <div class="intro"><p class="overline"><span></span> Аналитический кейс для команды «Самоката»</p>
 <h1>Пик<br>в <em>19:00<span>.</span></em></h1>
 <p class="lede">Спрос резко растёт. Заказы идут с опозданием. За одну смену найди узкое место и проверь, какое решение окупится.</p>
-<div class="hero-actions"><button class="button hot" id="start">Запустить вечерний пик <span aria-hidden="true">→</span></button><a class="button soft" href="#simulator">Открыть дашборд</a></div>
+<div class="hero-actions"><a class="button hot" id="start" href="#simulator">Запустить вечерний пик <span aria-hidden="true">→</span></a><a class="button soft" href="#simulator">Открыть дашборд</a></div>
 </div>
 <div class="hero-art">
 <div class="radar" aria-hidden="true"></div>
@@ -38,7 +38,7 @@
 <div class="mode" aria-label="Сценарий смены"><button data-scenario="base" aria-pressed="true">Обычная смена</button><button data-scenario="peak" aria-pressed="false">Вечерний пик</button></div>
 <div class="selectors"><label>Зона <select id="zone"><option value="all">Все зоны</option><option value="north">Север</option><option value="center">Центр</option><option value="south">Юг</option></select></label><label>Время <select id="slot"><option value="all">Вся смена</option><option>18:00</option><option>18:20</option><option>18:40</option><option>19:00</option><option>19:20</option><option>19:40</option></select></label></div>
 </div>
-<div class="status-line" role="status" id="status"></div>
+<noscript><p class="status-line">Для симулятора нужен JavaScript. Исходные данные и расчёты доступны в разделе «Методика».</p></noscript><div class="status-line" role="status" id="status"></div>
 <div class="metrics" id="metrics"></div>
 <div class="viz-row">
 <div class="viz"><div class="viz-head"><div><h3>Спрос по времени</h3><p>Нажми на столбец, чтобы открыть интервал</p></div><button class="quiet" id="clear-slot">Вся смена</button></div><div class="bars" id="bars"></div></div>

@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Закрыть год · Екатерина Дружинская</title>
+<meta name="description" content="Интерактивный кейс финансового менеджера: закрытие года, сверка, проекты проводок, IFRS и пакет для внешнего аудита.">
+<meta name="theme-color" content="#171631">
+<link rel="stylesheet" href="style.css">
+<script src="model.js" defer></script><script src="app.js" defer></script>
+</head>
+<body>
+<header class="top"><div class="wrap top-inner"><span class="brand"><i aria-hidden="true"></i> Закрыть год</span><nav aria-label="Разделы"><a href="#desk">Проверки</a><a href="#review">Ревью</a><a href="#files">Файлы</a></nav><span class="name">Екатерина Дружинская</span></div></header>
+<main id="top">
+<section class="hero"><div class="wrap hero-grid">
+<div class="intro"><p class="eyebrow"><i></i> Кейс для вакансии финансового менеджера</p><h1>Закрыть<br><em>год.</em></h1><p class="lead">Две компании, четыре вопроса к учёту и один пакет для внешнего аудита. Проверь первичку, собери проекты проводок и передай открытый VAT-вопрос на ревью.</p><div class="actions"><a class="btn primary" href="#desk">Начать проверку <span aria-hidden="true">→</span></a><a class="btn subtle" href="#review">Посмотреть пакет</a></div></div>
+<div class="hero-visual"><div class="screen"><div class="screen-head"><b><i></i> Northstar Group</b><span>УЧЕБНЫЙ КЕЙС</span></div><div class="screen-body"><div class="screen-title"><div><small>Контроли обработаны</small><strong id="score">0 / 4</strong></div><span>31 DEC</span></div><div class="progress"><i id="progress"></i></div><div id="hero-rows"></div></div><div class="screen-foot"><span>Годовое закрытие · EUR</span><b id="hero-state">Черновик</b></div></div></div>
+</div></section>
+<section class="wrap section" id="desk">
+<div class="section-head"><div><p class="eyebrow"><i></i> План аудита и закрытия</p><h2>Четыре проверки.</h2></div><p>Открой карточку, сопоставь данные и выбери решение. D — условная дата старта плана, сроки указаны в рабочих днях.</p></div>
+<div class="desk"><div class="desk-top"><div><h3>План с владельцами и сроками</h3><p>Финансовый менеджер готовит материалы. Team Lead проверяет проекты и согласует передачу аудиторам.</p></div><button class="btn neutral" id="reset">Сбросить демо</button></div><div class="workbench"><div class="queue" id="queue" aria-label="Проверки"></div><article class="detail" id="detail" aria-label="Детали выбранной проверки"></article></div></div>
+</section>
+<section class="section review" id="review"><div class="wrap">
+<div class="section-head"><div><p class="eyebrow"><i></i> Контроль качества перед передачей</p><h2>Пакет на ревью.</h2></div><p>В пакете видны сверки, проекты проводок, основания и открытые вопросы. Статус меняется после разбора всех четырёх проверок.</p></div>
+<div class="metrics" id="metrics"></div>
+<div class="entries"><div class="block-head"><div><h3>Журнал проектов проводок</h3><p>Записи юрлиц и консолидационные исключения отмечены отдельно.</p></div><button class="btn neutral" id="download-entries">Проводки CSV ↓</button></div><div class="scroll"><table><thead><tr><th>Проект</th><th>Контур</th><th>Дебет</th><th>Кредит</th><th>Сумма</th><th>Основание</th></tr></thead><tbody id="entries"></tbody></table></div></div>
+<div class="review-status"><div><h3 id="package-title">Черновик пакета</h3><p id="package-status" role="status"></p></div><button class="btn primary" id="download-package" disabled>Скачать чек-лист ревью ↓</button></div>
+<details class="message"><summary>Письмо налоговому консультанту · English</summary><p lang="en">Subject: Year-end VAT follow-up — TX-08</p><p lang="en">Hi, could you please confirm which supporting documents are needed for TX-08 and advise on the appropriate VAT treatment once the supplier invoice is available? The item is marked as open in the audit pack. Please let us know if you need the ledger extract or the transaction details.</p></details>
+</div></section>
+<section class="section wrap" id="files"><div class="section-head"><div><p class="eyebrow"><i></i> Рабочие материалы</p><h2>Повторить сверку.</h2></div><p>Компании, суммы, документы и сроки вымышлены. Проекты проводок остаются внутри демо. VAT-исключение открыто до проверки специалистом.</p></div>
+<div class="resources"><article><h3>Рабочая книга Excel</h3><p>Исходные остатки, сводка до и после корректировок, контроль дебета и кредита. Переключатели расчёта позволяют проверить проводки по отдельности.</p><a href="audit-workpapers.xlsx" download>Скачать Excel ↓</a><a href="audit-inputs.csv" download>Скачать исходные строки ↓</a></article><article><h3>От выгрузки до проверки</h3><p>В учебной модели сверяю синтетические строки в структуре Trial Balance и General Ledger с подтверждениями. Для рабочего процесса ориентируюсь на документацию Intuit по экспорту.</p><a href="https://quickbooks.intuit.com/learn-support/en-global/help-article/report-management/export-reports-excel-quickbooks-online/L7iAoP97n_ROW_en">Intuit · экспорт отчётов →</a></article><article><h3>Источники для проверки</h3><p>Консолидационная логика опирается на IFRS 10. Состав VAT-первички сверяется по типу операции и применимым правилам.</p><a href="https://www.ifrs.org/issued-standards/list-of-standards/ifrs-10-consolidated-financial-statements/">IFRS Foundation · IFRS 10 →</a><a href="https://taxation-customs.ec.europa.eu/taxation/vat/vat-businesses/invoicing_en">Еврокомиссия · VAT invoices →</a></article></div>
+<div class="author"><h3>Екатерина Дружинская</h3><p>Сверяла выгрузки 1С:БГУ с реестрами платежей, разбирала исключения и автоматизировала отчётность для 120–140 организаций с помощью Excel и VBA.</p></div>
+</section>
+</main>
+<footer><div class="wrap"><span>Закрыть год · Авторский кейс на демонстрационных данных</span><a href="#top">Наверх ↑</a></div></footer>
+</body></html>

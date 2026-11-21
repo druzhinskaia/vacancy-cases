@@ -11,7 +11,9 @@
   <meta property="og:image" content="https://druzhinskaia.github.io/vacancy-cases/farmline-ai/assets/editorial-cover.webp">
   <link rel="preload" href="assets/cormorant-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="tables.css">
   <script src="app.js" defer></script>
+  <script src="tables.js" type="module"></script>
 </head>
 <body>
   <a class="skip" href="#main">К содержанию</a>
@@ -23,6 +25,7 @@
     <nav class="topnav" aria-label="Разделы">
       <a href="#scenarios">Возможности</a>
       <a href="#demo">Прототип</a>
+      <a href="#tables">Таблицы</a>
       <a href="#pilot">Пилот</a>
       <a href="#experience">Опыт</a>
     </nav>
@@ -109,6 +112,67 @@
             <p class="next-step"><strong>Действие специалиста.</strong> Уточнить у закупок, согласована ли частичная поставка, и сверить количество при приёмке.</p>
           </div>
           <p class="simulation-note">Распознавание смоделировано. Сверка полей выполняется в браузере, данные в 1С не записываются.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section worktables" id="tables" aria-labelledby="tables-title">
+      <div class="wrap">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Данные и показатели</p>
+            <h2 id="tables-title">Рабочие таблицы</h2>
+          </div>
+          <p>Изменяйте значения и добавляйте строки в браузере. Примеры используют учебные данные.</p>
+        </div>
+        <div id="table-workbench" class="table-workbench">
+          <div class="table-toolbar" hidden>
+            <div class="table-controls">
+              <label>Таблица
+                <select id="table-mode">
+                  <option value="supplies">Сверка поставок</option>
+                  <option value="stock">Складские остатки</option>
+                  <option value="pilot">Метрики пилота</option>
+                  <option value="custom">Своя таблица</option>
+                </select>
+              </label>
+              <label class="table-filter"><input type="checkbox" id="table-flagged"> Только строки с отметкой</label>
+            </div>
+            <div class="table-options" hidden>
+              <label>Минимум запаса, дней <input type="number" inputmode="numeric" name="coverage" min="0" step="1" value="14"></label>
+              <label>Порог срока годности, дней <input type="number" inputmode="numeric" name="expiry" min="0" step="1" value="60"></label>
+            </div>
+            <p class="table-description"></p>
+          </div>
+          <div class="table-interactive" hidden>
+            <dl class="table-metrics" aria-label="Сводные показатели"></dl>
+            <p class="table-scroll-hint" id="table-scroll-hint">Прокрутите таблицу вправо, чтобы увидеть расчёты.</p>
+            <div class="editable-scroll" role="region" aria-label="Редактируемые строки" aria-describedby="table-scroll-hint" tabindex="0">
+              <table class="editable-grid">
+                <caption class="visually-hidden"></caption>
+                <thead></thead>
+                <tbody></tbody>
+              </table>
+            </div>
+            <p class="table-empty" hidden></p>
+            <div class="table-actions">
+              <button class="button table-primary" type="button" id="table-add">Добавить строку</button>
+              <button class="button outline" type="button" id="table-csv">Скачать свои данные CSV</button>
+              <button class="button table-reset" type="button" id="table-reset">Вернуть пример</button>
+            </div>
+            <p class="table-local">Изменения сохраняются в этом браузере. Сводка и CSV учитывают все строки, даже если включён фильтр.</p>
+            <p class="table-announcement visually-hidden" aria-live="polite"></p>
+          </div>
+        </div>
+        <div class="table-downloads" aria-labelledby="downloads-title">
+          <h3 id="downloads-title">Скачать Excel</h3>
+          <p>Формулы и учебные примеры для работы вне сайта.</p>
+          <ul>
+            <li><a href="files/supply-reconciliation.xlsx" download>Сверка поставок <span>XLSX</span></a></li>
+            <li><a href="files/inventory-control.xlsx" download>Складские остатки <span>XLSX</span></a></li>
+            <li><a href="files/pilot-metrics.xlsx" download>Метрики пилота <span>XLSX</span></a></li>
+            <li><a href="files/metric-template.xlsx" download>Пустой шаблон <span>XLSX</span></a></li>
+          </ul>
         </div>
       </div>
     </section>

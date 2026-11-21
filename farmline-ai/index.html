@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f4f1e7">
+  <title>ИИ в фармдистрибуции · Екатерина Дружинская</title>
+  <meta name="description" content="Кейс Екатерины Дружинской для ФАРМЛАЙН. Интерактивный прототип сверки документов и план внедрения ИИ в фармацевтической дистрибуции.">
+  <meta property="og:title" content="ИИ в фармдистрибуции · кейс для ФАРМЛАЙН">
+  <meta property="og:description" content="Екатерина Дружинская · проверка документов поставщика и план пилота">
+  <meta property="og:image" content="https://druzhinskaia.github.io/vacancy-cases/farmline-ai/assets/warehouse.webp">
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">К содержанию</a>
+  <header class="topbar shell">
+    <a class="wordmark" href="#main">
+      <span class="emblem" aria-hidden="true">✳</span>
+      <span>Екатерина Дружинская</span>
+    </a>
+    <nav class="topnav" aria-label="Разделы">
+      <a href="#scenarios">Возможности</a>
+      <a href="#demo">Прототип</a>
+      <a href="#pilot">Пилот</a>
+      <a href="#experience">Опыт</a>
+    </nav>
+    <a class="button outline small" href="https://druzhinskaia.github.io/">Портфолио</a>
+  </header>
+  <main id="main">
+    <section class="hero shell" aria-labelledby="title">
+      <img class="hero-image" src="assets/warehouse.webp" width="1536" height="1024" alt="" fetchpriority="high">
+      <div class="hero-shade"></div>
+      <div class="hero-content">
+        <div>
+          <p class="eyebrow hero-kicker"><span aria-hidden="true"></span> Кейс для ООО «ФАРМЛАЙН»</p>
+          <h1 id="title">ИИ в <span>фармдистрибуции</span></h1>
+          <p class="hero-description">Как сократить ручную сверку поставок, быстрее находить расхождения и измерить эффект внедрения.</p>
+          <a class="button light" href="#demo">Открыть прототип</a>
+        </div>
+        <a class="hero-index" href="#scenarios"><span aria-hidden="true">✧</span> Что можно автоматизировать</a>
+      </div>
+    </section>
+
+    <section class="section wrap" id="scenarios" aria-labelledby="scenarios-title">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Возможности автоматизации</p>
+          <h2 id="scenarios-title">С чего начать</h2>
+        </div>
+        <p>Первый пилот я бы провела на сверке документов поставщика. Здесь можно измерить время проверки и проверить точность на одной партии документов.</p>
+      </div>
+      <div class="scenario-layout">
+        <div class="scenario-list">
+          <article class="scenario-card">
+            <p class="eyebrow">Закупки · бухгалтерия</p>
+            <h3><a href="#demo">Документы поставщика</a></h3>
+            <p>Извлекать поля из PDF и сканов, сверять строки с заказом и выделять расхождения для специалиста.</p>
+          </article>
+          <article class="scenario-card">
+            <p class="eyebrow">Склад · закупки</p>
+            <h3>Складские остатки</h3>
+            <p>Сигнализировать о дефиците, излишках и приближении срока годности. Проверить прогноз на историческом спросе.</p>
+          </article>
+          <article class="scenario-card">
+            <p class="eyebrow">Продажи · маркетинг</p>
+            <h3>Обращения клиентов</h3>
+            <p>Группировать обращения по темам и готовить сводку с примерами, чтобы видеть повторяющиеся причины отказов.</p>
+          </article>
+        </div>
+        <figure class="product-photo">
+          <img src="assets/supply.webp" width="820" height="1025" loading="lazy" alt="Блистер, аптечный флакон и упаковки в оливковом свете">
+        </figure>
+      </div>
+    </section>
+
+    <section class="demo-section" id="demo" aria-labelledby="demo-title">
+      <div class="wrap demo-layout">
+        <div class="demo-intro">
+          <p class="eyebrow">Интерактивный прототип</p>
+          <h2 id="demo-title">Принять поставку<br><em>без догадок</em></h2>
+          <p>Выбери документ. Прототип сравнит заранее распознанные поля с заказом 1С и покажет, что нужно проверить вручную.</p>
+        </div>
+        <div class="workspace">
+          <div class="workspace-header">
+            <h3>Сверка с заказом 1С</h3>
+            <span class="sample-label">Учебные данные</span>
+          </div>
+          <fieldset class="sample-picker">
+            <legend>Документ поставщика</legend>
+            <div class="sample-options">
+              <label><input type="radio" name="sample" value="partial" checked><span>Частичная поставка</span></label>
+              <label><input type="radio" name="sample" value="scan"><span>Нечёткий скан</span></label>
+              <label><input type="radio" name="sample" value="match"><span>Полное совпадение</span></label>
+            </div>
+          </fieldset>
+          <div class="demo-result" id="demo-result" aria-live="polite">
+            <p class="result-note"><strong>Требуется проверка.</strong> Количество в документе меньше, чем в заказе.</p>
+            <table>
+              <caption class="visually-hidden">Сравнение документа поставщика и заказа 1С</caption>
+              <thead><tr><th scope="col">Поле</th><th scope="col">Документ</th><th scope="col">Заказ 1С</th></tr></thead>
+              <tbody>
+                <tr><th scope="row">Заказ</th><td>ФЛ-1042</td><td>ФЛ-1042</td></tr>
+                <tr><th scope="row">Артикул</th><td>ФМ-018</td><td>ФМ-018</td></tr>
+                <tr class="flagged"><th scope="row">Количество, уп.</th><td>95</td><td>100</td></tr>
+                <tr><th scope="row">Серия</th><td>КХ-2705</td><td>КХ-2705</td></tr>
+              </tbody>
+            </table>
+            <p class="next-step"><strong>Действие специалиста.</strong> Уточнить у закупок, согласована ли частичная поставка, и сверить количество при приёмке.</p>
+          </div>
+          <p class="simulation-note">Распознавание смоделировано. Сверка полей выполняется в браузере, данные в 1С не записываются.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section wrap" id="pilot" aria-labelledby="pilot-title">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">План пилота</p>
+          <h2 id="pilot-title">От процесса к запуску</h2>
+        </div>
+        <p>Начать с одного типа документов и согласовать критерии успеха с закупками, складом, бухгалтерией и ИТ.</p>
+      </div>
+      <div class="pilot-layout">
+        <div class="pilot-steps">
+          <details name="pilot" open>
+            <summary>Разобрать процесс и замерить базу</summary>
+            <p>Пройти путь документа с закупками и складом. Зафиксировать время ручной сверки, типовые расхождения и действия сотрудников при ошибках.</p>
+          </details>
+          <details name="pilot">
+            <summary>Сравнить инструменты на одной выборке</summary>
+            <p>Сопоставить шаблонное OCR и извлечение полей с помощью ИИ на одинаковой размеченной выборке PDF и сканов. Учесть точность по каждому полю, время, стоимость обработки и условия работы с данными.</p>
+          </details>
+          <details name="pilot">
+            <summary>Проверить параллельно с текущим процессом</summary>
+            <p>Точные сравнения выполнять правилами на выгрузке из 1С. Нечитаемые поля и расхождения передавать сотруднику. Сравнить результат с ручной сверкой на контрольной выборке.</p>
+          </details>
+          <details name="pilot">
+            <summary>Обучить команду и принять решение</summary>
+            <p>Провести короткий разбор примеров и оставить инструкцию по спорным случаям. Обсудить результаты с владельцем процесса и решить, стоит ли расширять пилот.</p>
+          </details>
+        </div>
+        <aside class="metrics" aria-labelledby="metrics-title">
+          <h3 id="metrics-title">Что измерять</h3>
+          <dl>
+            <div><dt>Время</dt><dd>Медианное время сверки документа до и во время пилота.</dd></div>
+            <div><dt>Точность</dt><dd>Доля корректно извлечённых значений по каждому полю.</dd></div>
+            <div><dt>Пропуски</dt><dd>Доля реальных расхождений, которые прототип не отметил.</dd></div>
+          </dl>
+        </aside>
+      </div>
+    </section>
+
+    <section class="experience" id="experience" aria-labelledby="experience-title">
+      <div class="wrap experience-layout">
+        <div class="experience-intro">
+          <p class="eyebrow">Мой опыт</p>
+          <h2 id="experience-title">Екатерина<br><em>Дружинская</em></h2>
+          <p>Работаю с отчётностью, проверкой данных и автоматизацией. Учусь в магистратуре по бизнес-информатике.</p>
+          <div class="contact-links">
+            <a class="button light" href="mailto:comfe2436@gmail.com">Написать мне</a>
+            <a class="button ghost" href="https://druzhinskaia.github.io/">Портфолио</a>
+          </div>
+        </div>
+        <div class="experience-projects">
+          <article>
+            <h3>Отчётность для 120–140 организаций</h3>
+            <p>В ИТЦ «Соцзащита» Москвы автоматизировала сбор и проверку отчётности в Excel и VBA. Подготовила инструкции и обучила коллег работе с инструментом.</p>
+          </article>
+          <article>
+            <h3>Сверка выгрузок 1С:БГУ</h3>
+            <p>Проверяла совпадения по нескольким полям, когда суммы повторялись. Спорные строки выделяла для ручной проверки.</p>
+          </article>
+          <article>
+            <h3>ИИ в рабочих прототипах</h3>
+            <p>Использую ИИ для разработки и разбора логики в VBA, SQL и Python. Проверяю результаты на примерах и пограничных случаях.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer class="footer wrap">
+    <span>Екатерина Дружинская · проект для отклика</span>
+    <a href="../">Другие кейсы</a>
+  </footer>
+</body>
+</html>
